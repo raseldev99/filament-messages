@@ -1,0 +1,44 @@
+{
+    "name": "raseldev99/filament-messages",
+    "description": "Filament Messages is a powerful messaging plugin for FilamentPHP. It provides an easy-to-use interface for real-time messaging within Filament admin panels.",
+    "keywords": ["laravel", "framework", "admin-panel", "messages", "chat", "filament"],
+    "homepage": "https://github.com/raseldev99/filament-messages",
+    "support": {
+        "issues": "https://github.com/raseldev99/filament-messages/issues",
+        "source": "https://github.com/raseldev99/filament-messages"
+    },
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^8.2"
+    },
+    "require-dev": {
+        "filament/filament": "^3.2",
+        "laravel/framework": "^11.31",
+        "phpunit/phpunit": "^11.0.1",
+        "filament/spatie-laravel-media-library-plugin": "^3.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Raseldev99\\FilamentMessages\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Rasel",
+            "email": "raselbabu34.bd@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Raseldev99\\FilamentMessages\\FilamentMessagesServiceProvider"
+            ],
+            "aliases": {
+                "FilamentMessages": "Raseldev99\\FilamentMessages\\Facades"
+            }
+        }
+    }
+}
