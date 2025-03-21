@@ -13,6 +13,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
+use Raseldev99\FilamentMessages\FilamentMessages;
 use Raseldev99\FilamentMessages\Livewire\Traits\CanMarkAsRead;
 use Raseldev99\FilamentMessages\Livewire\Traits\CanValidateFiles;
 use Raseldev99\FilamentMessages\Livewire\Traits\HasPollInterval;
@@ -84,7 +85,7 @@ class Inbox extends Component implements HasActions, HasForms
      * When the form is submitted, the action creates a new conversation (if it doesn't exist already),
      * and adds a new message to the conversation.
      *
-     * @return \Filament\Actions\Action
+     * @return Action
      */
     public function createConversationAction(): Action
     {
@@ -95,8 +96,8 @@ class Inbox extends Component implements HasActions, HasForms
                 Forms\Components\Select::make('user_ids')
                     ->label(__('Select User(s)'))
                     ->options(fn () => \App\Models\User::whereNotIn('id', [Auth::id()])->get()->pluck('name', 'id'))
-                    ->multiple()
                     ->preload(false)
+                    ->multiple()
                     ->searchable()
                     ->required()
                     ->live(),
@@ -136,7 +137,7 @@ class Inbox extends Component implements HasActions, HasForms
                     'read_at' => [now()],
                     'notified' => [Auth::id()],
                 ]);
-                redirect()->route('filament.admin.pages.filament-messages.{id?}', ['id' => $inboxId]);
+                redirect(\Raseldev99\FilamentMessages\Filament\Pages\Messages::getUrl(['id' => $inboxId]));
             })->extraAttributes([
                 'class' => 'w-full'
             ]);

@@ -7,6 +7,7 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -21,6 +22,7 @@ use Raseldev99\FilamentMessages\Livewire\Traits\HasPollInterval;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class Messages extends Component implements HasForms
 {
@@ -108,8 +110,8 @@ class Messages extends Component implements HasForms
      * - The 'message' field is a textarea that supports live updates
      *   and automatically adjusts its height based on the content.
      *
-     * @param \Filament\Forms\Form $form The form instance.
-     * @return \Filament\Forms\Form The customized form instance.
+     * @param Form $form The form instance.
+     * @return Form The customized form instance.
      */
     public function form(Form $form): Form
     {
@@ -155,7 +157,7 @@ class Messages extends Component implements HasForms
      * notification is sent to inform the user of the error.
      *
      * @return void
-     * @throws \Exception
+     * @throws \Exception|\Throwable
      */
     public function sendMessage(): void
     {
@@ -204,11 +206,11 @@ class Messages extends Component implements HasForms
      * and paginates them by 10 messages per page. The pagination starts at
      * the current page index.
      *
-     * @return \Illuminate\Contracts\Pagination\Paginator The paginator instance
+     * @return Paginator The paginator instance
      * for the conversation messages.
      */
     #[Computed()]
-    public function paginator(): \Illuminate\Contracts\Pagination\Paginator
+    public function paginator(): Paginator
     {
         return $this->selectedConversation->messages()->latest()->paginate(10, ['*'], 'page', $this->currentPage);
     }
@@ -218,9 +220,9 @@ class Messages extends Component implements HasForms
      *
      * @param string $filePath The file path of the attachment to download.
      * @param string $fileName The file name to send with the attachment.
-     * @return \Illuminate\Http\Response The response containing the attachment.
+     * @return BinaryFileResponse The response containing the attachment.
      */
-    public function downloadAttachment(string $filePath, string $fileName)
+    public function downloadAttachment(string $filePath, string $fileName): BinaryFileResponse
     {
         return response()->download($filePath, $fileName);
     }

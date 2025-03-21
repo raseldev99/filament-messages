@@ -10,7 +10,7 @@ trait HasFilamentMessages
     /**
      * Retrieves all conversations for the current user.
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return Builder
      */
     public function allConversations(): Builder
     {
